@@ -1,37 +1,39 @@
-name: Hugo Build and Deploy
+name: Deploy to Custom Domain
 
 on:
   push:
-    branches: ["master"]
+    branches: [ master ]
   workflow_dispatch:
 
-# Ключевое изменение - добавляем permissions
 permissions:
   contents: write
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
-    
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
+      
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
-          hugo-version: "latest"
+          hugo-version: '0.128.0'
           extended: true
-
+      
       - name: Build
-        run: hugo --minify
-
+        run: hugo --minify --baseURL "https://sale.okolotattooing.ru/"
+      
+      # Проверяем создание CNAME
+      - name: Verify CNAME
+        run: |
+          echo "sale.okolotattooing.ru" > ./public/CNAME
+          cat ./public/CNAME
+      
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
-        env:
-          # Можно использовать env вместо with для некоторых настроек
-          ACTIONS_DEPLOY_KEY: ${{ secrets.GITHUB_TOKEN }}
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
-          keep_files: false  # очищать папку при деплое
+          publish_branch: gh-pages
+          cname: sale.okolotattooing.ru
+          keep_files: false
