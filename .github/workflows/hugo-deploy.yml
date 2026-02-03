@@ -3,35 +3,32 @@ name: Build & Deploy Hugo Site
 on:
   push:
     branches:
-      - master      # твоя основная ветка
-  workflow_dispatch:  # позволяет запускать вручную
+      - master
+  workflow_dispatch:
 
 jobs:
-  build-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        with:
-          submodules: true
-          fetch-depth: 0
 
       - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v3
+        uses: peaceiris/actions-hugo@v2
         with:
           hugo-version: "latest"
           extended: false
 
       - name: Build Hugo site
-        run: hugo --minify --themesDir ./themes --baseURL https://sale.okolotattooing.ru/
+        run: hugo --minify
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
           publish_dir: ./public
-          force_orphan: true
+          # Эти опции решают проблемы с git 128
+          force_orphan: true   # создаёт новую ветку, если её нет
           user_name: "github-actions[bot]"
           user_email: "github-actions[bot]@users.noreply.github.com"
