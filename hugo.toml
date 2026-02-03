@@ -14,8 +14,8 @@ disableKinds = ["taxonomy", "term"]
   image = "/img/author.jpg"
 
   links = [
-     { booking = { href = "https://shop.odintattoo.ru/Tattoo_cartridges/one-shot?utm_source=iz_gruppy_telegram", text = "ODIN" } },
-     { booking = { href = "https://www.kraskatattooink.com/collection/okolotattoo?utm_source=iz_gruppy_telegram", text = "Kraska" } },
+     { booking = { href = "https://t.me/odin_ot_bot/goapp?utm_source=iz_gruppy_telegram", text = "ODIN" } },
+     { booking = { href = "https://t.me/kraska_ot_bot/goapp?utm_source=iz_gruppy_telegram", text = "Kraska" } },
     # { email = "mailto:hello@your_domain.com" },
     # { link = "https://link-to-some-website.com/" },
     # { amazon = "https://www.amazon.com/hz/wishlist/ls/wishlist-id" },
